@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const line = fs.readFileSync('input.txt', {encoding: 'utf-8'});
 
 let floor = 0;

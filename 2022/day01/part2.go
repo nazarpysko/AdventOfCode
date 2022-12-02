@@ -1,11 +1,10 @@
-package day01
+package main
 
 import (
-	"bufio"
 	"fmt"
-	"log"
-	"os"
+	"github.com/nazarpysko/AoC/2022/utils"
 	"strconv"
+	"time"
 )
 
 // min returns index of the lowest value in an array
@@ -30,33 +29,29 @@ func sum(arr [3]int) int {
 	return sum
 }
 
-func Part2() {
-	f, err := os.Open("C:\\Users\\usuario\\Desktop\\AoC\\2022\\day01\\input.txt")
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
-
-	sc := bufio.NewScanner(f)
+func part2(input []string) {
 	maxCalories := [3]int{0, 0, 0}
 	currentElfCalories := 0
-	for sc.Scan() {
-		if sc.Text() == "" {
+	for _, line := range input {
+		if line == "" {
 			i := min(maxCalories)
 			if currentElfCalories > maxCalories[i] {
 				maxCalories[i] = currentElfCalories
 			}
 			currentElfCalories = 0
 		} else {
-			calories, _ := strconv.Atoi(sc.Text())
+			calories, _ := strconv.Atoi(line)
 			currentElfCalories += calories
 		}
 	}
 
-	if err := sc.Err(); err != nil {
-		log.Fatalf("scan file error: %v", err)
-		return
-	}
-
 	fmt.Println("Max calories:", sum(maxCalories))
+}
+
+func main() {
+	input := utils.ReadInputFile(utils.GenInputFile(1))
+
+	timer := time.Now()
+	part2(input)
+	fmt.Println("Time:", time.Since(timer))
 }

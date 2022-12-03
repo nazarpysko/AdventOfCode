@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func rearrangeRucksacks(input []string) {
+func rearrangeRucksacks(input []string) int {
 	sumPriorities := 0
 
 	for _, rucksack := range input {
@@ -17,30 +17,21 @@ func rearrangeRucksacks(input []string) {
 
 		for _, i := range firstCompartment {
 			item := string(i)
-			fmt.Printf("Searching %c in %s\n", i, secondCompartment)
 			if strings.Contains(secondCompartment, item) && !strings.Contains(repeatedItems, item) {
 				sumPriorities += getPriorityValue(i)
 				repeatedItems = repeatedItems + item
-				fmt.Println("Found. Item priority value is", getPriorityValue(i))
 			} else {
-				fmt.Println("Not found")
 			}
 		}
 	}
 
 	fmt.Println("Total sum priorities:", sumPriorities)
+	return sumPriorities
 }
 
 func main() {
 	input := utils.ReadInputFile(utils.GenInputFile(03))
-	//input := []string{
-	//	"vJrwpWtwJgWrhcsFMMfFFhFp",
-	//	"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
-	//	"PmmdzqPrVvPwwTWBwg",
-	//	"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-	//	"ttgJtRGJQctTZtZT",
-	//	"CrZsJsPPZsGzwwsLwLmpwMDw",
-	//}
+
 	timer := time.Now()
 	rearrangeRucksacks(input)
 	fmt.Println("Time:", time.Since(timer))

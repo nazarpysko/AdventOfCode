@@ -6,14 +6,19 @@ import (
 	"time"
 )
 
-func solveFuncName(input []string) {
+func test(input []string) {
+	totalScore := 0
+	for _, play := range input {
+		totalScore += scorePlay[play]
+	}
 
+	fmt.Println("Total score:", totalScore)
 }
 
 func main() {
 	input := utils.ReadInputFile(utils.GenInputFile(2))
 
 	timer := time.Now()
-	solveFuncName(input)
+	test(input)
 	fmt.Println("Time:", time.Since(timer))
 }

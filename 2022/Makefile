@@ -1,8 +1,3 @@
-# STEPS FOR EACH DAY
-# Make directory named dayxx
-# Make part1 and part2 Go executable files following a template
-# Generate input text file
-
 new:
 	@echo "Creating new structure for day $(day) ..."
 

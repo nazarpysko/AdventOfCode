@@ -56,6 +56,8 @@ func readHttp(year, day int) string {
 }
 
 func ReadInputFile(path string) []string {
+	fmt.Println("Reading from input file...", path)
+
 	f, err := os.Open(path)
 	if err != nil {
 		panic(err)

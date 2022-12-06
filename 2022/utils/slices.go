@@ -1,8 +1,8 @@
-package main
+package utils
 
 import "strconv"
 
-func getArrayInt(s []string) []int {
+func GetSliceInt(s []string) []int {
 	arr := make([]int, 0)
 	for i := range s {
 		n, _ := strconv.Atoi(s[i])

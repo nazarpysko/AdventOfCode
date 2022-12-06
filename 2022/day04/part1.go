@@ -8,8 +8,8 @@ import (
 )
 
 func findOverlaps(first, second string) int {
-	firstSection := getArrayInt(strings.Split(first, "-"))
-	secondSection := getArrayInt(strings.Split(second, "-"))
+	firstSection := utils.GetSliceInt(strings.Split(first, "-"))
+	secondSection := utils.GetSliceInt(strings.Split(second, "-"))
 
 	if firstSection[0] <= secondSection[0] && firstSection[1] >= secondSection[1] ||
 		secondSection[0] <= firstSection[0] && secondSection[1] >= firstSection[1] {

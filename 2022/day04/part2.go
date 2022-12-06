@@ -7,23 +7,22 @@ import (
 	"time"
 )
 
-func findOverlapsAtAll(first string, second string) bool {
-	firstSection := getArrayInt(strings.Split(first, "-"))
-	secondSection := getArrayInt(strings.Split(second, "-"))
+func findOverlapsAtAll(first string, second string) int {
+	firstSection := utils.GetSliceInt(strings.Split(first, "-"))
+	secondSection := utils.GetSliceInt(strings.Split(second, "-"))
 
-	if firstSection[0] <= secondSection[0] || firstSection[1] >= secondSection[1] {
-		return true
+	if firstSection[0] >= secondSection[0] && firstSection[0] <= secondSection[1] ||
+		secondSection[0] >= firstSection[0] && secondSection[0] <= firstSection[1] {
+		return 1
 	}
-	return false
+	return 0
 }
 
 func campCleanUpPart2(input []string) int {
 	overlaps := 0
 	for _, line := range input {
 		sections := strings.Split(line, ",")
-		if findOverlapsAtAll(sections[0], sections[1]) {
-			overlaps++
-		}
+		overlaps += findOverlapsAtAll(sections[0], sections[1])
 	}
 
 	fmt.Println("Overlaps found:", overlaps)

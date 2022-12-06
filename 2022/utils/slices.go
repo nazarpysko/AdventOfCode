@@ -11,3 +11,9 @@ func GetSliceInt(s []string) []int {
 
 	return arr
 }
+
+func Pop(s []any, quantity int) []any {
+	popped := s[len(s)-quantity:]
+	s = s[:len(s)-quantity]
+	return popped
+}

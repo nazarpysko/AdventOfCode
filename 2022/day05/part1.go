@@ -8,7 +8,12 @@ import (
 
 func cargoCranePart1(input []string) {
 	crates, instructionsStart := parseCrane(input)
-	fmt.Println(crates[0], instructionsStart)
+	for _, i := range input[instructionsStart:] {
+		inst := parseInstruction(i)
+		crates.moveCrates(inst)
+	}
+
+	fmt.Println("Top crates:", crates.getTopCrates())
 }
 
 func main() {

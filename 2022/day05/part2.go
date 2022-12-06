@@ -6,11 +6,28 @@ import (
 	"time"
 )
 
+func countGs(c crates) int {
+	count := 0
+	for _, V := range c {
+		for _, i := range V {
+			if string(i) == "G" {
+				count += 1
+			}
+		}
+	}
+
+	return count
+}
+
 func cargoCranePart2(input []string) {
 	crates, instructionsStart := parseCrane(input)
-	for _, i := range input[instructionsStart:] {
+	for j, i := range input[instructionsStart:] {
 		inst := parseInstruction(i)
 		crates.moveCrates(inst, crates.pop)
+		gs := countGs(crates)
+		if gs > 4 {
+			fmt.Println("Duplication detected in instruction %d (%d G's counted)", j, gs)
+		}
 	}
 
 	fmt.Println("Top crates:", crates.getTopCrates())

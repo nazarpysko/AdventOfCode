@@ -20,7 +20,8 @@ type instruction struct {
 type crates map[int][]string
 
 func (c crates) pop(from, quantity int) []string {
-	popped := c[from][:quantity]
+	popped := make([]string, 0)
+	popped = append(popped, c[from][:quantity]...)
 	c[from] = c[from][quantity:]
 
 	return popped

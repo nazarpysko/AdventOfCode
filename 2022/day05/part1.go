@@ -10,7 +10,7 @@ func cargoCranePart1(input []string) {
 	crates, instructionsStart := parseCrane(input)
 	for _, i := range input[instructionsStart:] {
 		inst := parseInstruction(i)
-		crates.moveCrates(inst)
+		crates.moveCrates(inst, crates.popReversed)
 	}
 
 	fmt.Println("Top crates:", crates.getTopCrates())

@@ -19,11 +19,17 @@ type instruction struct {
 // Indexed from 0 to columns
 type crates map[int][]string
 
-func (c crates) popReversed(from, quantity int) []string {
+func (c crates) pop(from, quantity int) []string {
 	popped := c[from][:quantity]
 	c[from] = c[from][quantity:]
 
+	return popped
+}
+
+func (c crates) popReversed(from, quantity int) []string {
+	popped := c.pop(from, quantity)
 	reversed := make([]string, 0)
+
 	for _, item := range popped {
 		reversed = append([]string{item}, reversed...)
 	}
@@ -31,8 +37,8 @@ func (c crates) popReversed(from, quantity int) []string {
 	return reversed
 }
 
-func (c crates) moveCrates(inst instruction) {
-	popped := c.popReversed(inst.from, inst.quantity)
+func (c crates) moveCrates(inst instruction, pop func(from, quantity int) []string) {
+	popped := pop(inst.from, inst.quantity)
 	c[inst.to] = append(popped, c[inst.to]...)
 }
 

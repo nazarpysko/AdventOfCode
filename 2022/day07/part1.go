@@ -7,7 +7,16 @@ import (
 )
 
 func solvePart1(input []string) {
+	fs := fileSystem{directories: map[string]int{}}
+	for _, line := range input {
+		if isCommand(line) && line[2:4] == "cd" {
+			fs.cd(line[5:])
+		} else if isFile(line) {
+			fs.add(getBytesFromLine(line))
+		}
+	}
 
+	fmt.Println("Solution:", getSolution(fs.directories))
 }
 
 func main() {

@@ -14,36 +14,40 @@ type fileSystem struct {
 }
 
 // cd adds new path and returns the current working directory
-func (f *fileSystem) cd(newDirectoryName string) {
-	nDirectoriesInPath := strings.Count(f.path, "/")
-	if newDirectoryName == ".." {
-		if nDirectoriesInPath == 2 {
+func (f *fileSystem) cd(dirName string) {
+	if dirName == ".." {
+		if strings.Count(f.path, "/") == 1 {
 			f.path = "/"
 		} else {
 			f.path = f.path[:strings.LastIndex(f.path, "/")]
 		}
 		return
-	} else if newDirectoryName == "/" {
+	} else if dirName == "/" {
 		f.path = "/"
 	} else {
-		separator := ""
-		if nDirectoriesInPath >= 1 {
-			separator = "/"
+		separator := "/"
+		if f.path == "/" {
+			separator = ""
 		}
-		f.path += separator + newDirectoryName
+		f.path += separator + dirName
 	}
 
-	_, exists := f.directories[newDirectoryName]
+	_, exists := f.directories[f.path]
 	if !exists {
-		f.directories[newDirectoryName] = 0
+		f.directories[f.path] = 0
 	}
 }
 
-// add sums the size passed to the current and the parents directory as well
+// add sums the size to all directories from path
 func (f *fileSystem) add(size int) {
-	for _, d := range append([]string{"/"}, strings.Split(f.path, "/")...) {
-		if d != "" {
-			f.directories[d] += size
+	currentPath := f.path
+	for {
+		f.directories[currentPath] += size
+		if currentPath == "" {
+			f.directories["/"] += size
+			break
+		} else {
+			currentPath = currentPath[:strings.LastIndex(currentPath, "/")]
 		}
 	}
 }

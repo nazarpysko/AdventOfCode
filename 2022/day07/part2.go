@@ -21,7 +21,8 @@ func solvePart2(input []string) {
 		}
 	}
 
-	freeSpace := totalSpaceAvailable - fs.directories["/"]
+	outmostDirectorySpace := fs.directories["/"]
+	freeSpace := totalSpaceAvailable - outmostDirectorySpace
 	spaceToBeDeleted := spaceNeededToUpdate - freeSpace
 	smallestCandidate := 9223372036854775807 // Infinity as an int64
 	for _, size := range fs.directories {

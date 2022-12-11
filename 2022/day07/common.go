@@ -42,11 +42,11 @@ func (f *fileSystem) cd(dirName string) {
 func (f *fileSystem) add(size int) {
 	currentPath := f.path
 	for {
-		f.directories[currentPath] += size
-		if currentPath == "" {
+		if currentPath == "" || currentPath == "/" {
 			f.directories["/"] += size
 			break
 		} else {
+			f.directories[currentPath] += size
 			currentPath = currentPath[:strings.LastIndex(currentPath, "/")]
 		}
 	}

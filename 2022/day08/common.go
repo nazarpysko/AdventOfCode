@@ -79,3 +79,43 @@ func isVisible(t tree, input []string) bool {
 
 	return visibleVertical
 }
+
+func getScenicScore(t tree, input []string) int {
+	// Get top trees
+	topTrees := 0
+	for y := t.row - 1; y >= 0; y-- {
+		topTrees++
+		if getHeight(input, t.column, y) >= t.height {
+			break
+		}
+	}
+
+	// Get bottom trees
+	bottomTrees := 0
+	for y := t.row + 1; y < len(input); y++ {
+		bottomTrees++
+		if getHeight(input, t.column, y) >= t.height {
+			break
+		}
+	}
+
+	// Get left trees
+	leftTrees := 0
+	for x := t.column - 1; x >= 0; x-- {
+		leftTrees++
+		if getHeight(input, x, t.row) >= t.height {
+			break
+		}
+	}
+
+	// Get right trees
+	rightTrees := 0
+	for x := t.column + 1; x < len(input[0]); x++ {
+		rightTrees++
+		if getHeight(input, x, t.row) >= t.height {
+			break
+		}
+	}
+
+	return topTrees * rightTrees * bottomTrees * leftTrees
+}

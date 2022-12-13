@@ -12,6 +12,6 @@ Make sure to export sessionAoC environment variable with your session cookie of 
 
 To run a specific day and part, make sure to be in 2022 folder and execute the following:
 ```
-go run dayXX/partY.go
+go run dayXX/partY.go dayXX/common.go
 ```
 

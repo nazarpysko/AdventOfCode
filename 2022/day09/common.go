@@ -26,29 +26,29 @@ type coordinate struct {
 
 type grid struct {
 	visitedTailPositions map[coordinate]bool
-	currentHead          coordinate
-	currentTail          coordinate
+	head                 coordinate
+	tail                 coordinate
 }
 
 func newGrid() grid {
 	grid := grid{
 		visitedTailPositions: make(map[coordinate]bool, 0),
-		currentHead:          coordinate{0, 0},
-		currentTail:          coordinate{0, 0},
+		head:                 coordinate{0, 0},
+		tail:                 coordinate{0, 0},
 	}
 
-	grid.visitedTailPositions[grid.currentTail] = true
+	grid.visitedTailPositions[grid.tail] = true
 	return grid
 }
 
 func (g *grid) moveHead(x, y int) {
-	g.currentHead.x += x
-	g.currentHead.y += y
+	g.head.x += x
+	g.head.y += y
 }
 
 func (g *grid) moveTail(x, y int) {
-	g.currentTail.x += x
-	g.currentTail.y += y
+	g.tail.x += x
+	g.tail.y += y
 }
 
 func (g *grid) move(m motion) {
@@ -72,7 +72,7 @@ func (g *grid) moveRope(distance, x, y int) {
 	for i := 0; i < utils.Abs(distance); i++ {
 		g.moveHead(x, y)
 
-		dx, dy := g.currentHead.x-g.currentTail.x, g.currentHead.y-g.currentTail.y
+		dx, dy := g.head.x-g.tail.x, g.head.y-g.tail.y
 
 		if utils.Abs(dx) <= 1 && utils.Abs(dy) <= 1 {
 			continue
@@ -80,7 +80,7 @@ func (g *grid) moveRope(distance, x, y int) {
 
 		g.moveTail(utils.Sign(dx), utils.Sign(dy))
 
-		g.visitedTailPositions[g.currentTail] = true
+		g.visitedTailPositions[g.tail] = true
 	}
 }
 

@@ -7,7 +7,12 @@ import (
 )
 
 func solvePart2(input []string) {
+	program := newProgram()
+	for _, ins := range input {
+		program.execute(ins)
+	}
 
+	fmt.Println(program.crp.drawing)
 }
 
 func main() {

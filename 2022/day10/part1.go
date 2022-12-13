@@ -12,7 +12,7 @@ func solvePart1(input []string) {
 		program.execute(ins)
 	}
 
-	fmt.Println("Solution:", program.getSolution())
+	fmt.Println("Solution:", program.getSumSignals())
 }
 
 func main() {

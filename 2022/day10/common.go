@@ -33,8 +33,8 @@ func (p *program) execute(ins string) {
 
 func (p *program) getSolution() int {
 	sum := 0
-	for i := 20; i < len(p.cycles); i += 20 {
-		sum += i * p.cycles[i]
+	for i := 20; i < len(p.cycles); i += 40 {
+		sum += i * p.cycles[i-1]
 	}
 
 	return sum

@@ -7,7 +7,12 @@ import (
 )
 
 func solvePart2(input []string) {
+	grid := newGrid(9)
+	for _, line := range input {
+		grid.move(parseMotion(line))
+	}
 
+	fmt.Println("Positions visited:", grid.getPositionsVisitedByTails())
 }
 
 func main() {

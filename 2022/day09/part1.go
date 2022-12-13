@@ -7,7 +7,7 @@ import (
 )
 
 func solvePart1(input []string) {
-	grid := newGrid()
+	grid := newGrid(1)
 	for _, line := range input {
 		grid.move(parseMotion(line))
 	}

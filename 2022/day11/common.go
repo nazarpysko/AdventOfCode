@@ -2,12 +2,13 @@ package main
 
 import (
 	"github.com/nazarpysko/AoC/2022/utils"
+	"math"
 	"strconv"
 	"strings"
 	"unicode"
 )
 
-type nextMonkeyFunc struct {
+type nextMonkey struct {
 	divisibleBy int
 	trueTarget  int
 	falseTarget int
@@ -16,25 +17,26 @@ type nextMonkeyFunc struct {
 type monkey struct {
 	items []int
 	op    func(int) int
-	nextMonkeyFunc
+	nextMonkey
+	inspectedItems int
 }
 
 func newMonkey() monkey {
 	return monkey{}
 }
 
-// A barrel is called a group of monkeys
-type barrel struct {
-	monkeys []monkey
+func (m *monkey) incrementInspectedItems() {
+	m.inspectedItems++
 }
+
+// A barrel is called a group of monkeys
+type barrel []monkey
 
 func newBarrel() barrel {
-	return barrel{
-		monkeys: make([]monkey, 0),
-	}
+	return make([]monkey, 0)
 }
 
-func (b *barrel) addMonkey(schema []string) {
+func parseMonkey(schema []string) monkey {
 	m := newMonkey()
 	m.items = utils.GetSliceInt(strings.Split(strings.Split(schema[0], ": ")[1], ", "))
 	m.op = func(old int) int {
@@ -64,4 +66,46 @@ func (b *barrel) addMonkey(schema []string) {
 
 		return new
 	}
+
+	m.nextMonkey.divisibleBy, _ = strconv.Atoi(strings.Split(schema[2], "by ")[1])
+	m.nextMonkey.trueTarget, _ = strconv.Atoi(strings.Split(schema[3], "monkey ")[1])
+	m.nextMonkey.falseTarget, _ = strconv.Atoi(strings.Split(schema[4], "monkey ")[1])
+
+	return m
+}
+
+func (b barrel) throwToMonkey(monkey, item int) {
+	b[monkey].items = append(b[monkey].items, item)
+}
+
+func (b barrel) doRound(worryDivisor int) barrel {
+	for monkeyIndex, m := range b {
+		for i := 0; i < len(m.items); i++ {
+			var monkeyTarget, item int
+
+			item, b[monkeyIndex].items = utils.Pop(b[monkeyIndex].items)
+			item = int(math.Floor(float64(m.op(item) / 3)))
+			if item%m.divisibleBy == 0 {
+				monkeyTarget = m.trueTarget
+			} else {
+				monkeyTarget = m.falseTarget
+			}
+			b[monkeyIndex].inspectedItems++
+			b.throwToMonkey(monkeyTarget, item)
+		}
+	}
+
+	return b
+}
+
+func (b barrel) getMonkeyBusiness() int {
+	mostActiveMonkeys := []int{0, 0}
+	for _, m := range b {
+		minValue, minIndex := utils.Min(mostActiveMonkeys)
+		if m.inspectedItems > minValue {
+			mostActiveMonkeys[minIndex] = m.inspectedItems
+		}
+	}
+
+	return mostActiveMonkeys[0] * mostActiveMonkeys[1]
 }

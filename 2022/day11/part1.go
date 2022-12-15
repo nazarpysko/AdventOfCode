@@ -7,13 +7,15 @@ import (
 )
 
 func solvePart1(input []string) {
+	part := 1
+
 	barrel := newBarrel()
 	for i := 0; i < len(input); i += 7 {
 		barrel = append(barrel, parseMonkey(input[i+1:i+6]))
 	}
 
 	for i := 0; i < 20; i++ {
-		barrel = barrel.doRound(3)
+		barrel = barrel.doRound(part)
 	}
 
 	fmt.Println("Monkey business:", barrel.getMonkeyBusiness())

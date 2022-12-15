@@ -78,13 +78,21 @@ func (b barrel) throwToMonkey(monkey, item int) {
 	b[monkey].items = append(b[monkey].items, item)
 }
 
-func (b barrel) doRound(worryDivisor int) barrel {
+func (b barrel) doRound(part int) barrel {
+	commonMultiple := b.getCommonMultiple()
 	for monkeyIndex, m := range b {
 		for i := 0; i < len(m.items); i++ {
 			var monkeyTarget, item int
 
 			item, b[monkeyIndex].items = utils.Pop(b[monkeyIndex].items)
-			item = int(math.Floor(float64(m.op(item) / 3)))
+			item = int(math.Floor(float64(m.op(item))))
+
+			if part == 1 {
+				item /= 3
+			} else {
+				item %= commonMultiple
+			}
+
 			if item%m.divisibleBy == 0 {
 				monkeyTarget = m.trueTarget
 			} else {
@@ -96,6 +104,15 @@ func (b barrel) doRound(worryDivisor int) barrel {
 	}
 
 	return b
+}
+
+func (b barrel) getCommonMultiple() int {
+	common_multiple := 1
+	for _, m := range b {
+		common_multiple *= m.divisibleBy
+	}
+
+	return common_multiple
 }
 
 func (b barrel) getMonkeyBusiness() int {

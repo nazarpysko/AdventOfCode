@@ -7,3 +7,8 @@ new:
 	@cp template ./day$(day)/part2.go | sed -i -e 's/FuncName/Part2/' -e 's/day/$(day)/' ./day$(day)/part2.go
 
 	@echo "Done!"
+
+copyPart1:
+	@echo "From day $(day), copying contents of part1 to part2..."
+	@cp ./day$(day)/part1.go ./day$(day)/part2.go | sed -i 's/Part1/Part2/' ./day$(day)/part2.go
+	@echo "Done!"

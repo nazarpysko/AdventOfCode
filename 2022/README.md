@@ -15,5 +15,5 @@ make new day=XX
 
 To copy part1 to part2.go file
 ``` make
-make new day=XX
+make copyPart1 day=XX
 ```

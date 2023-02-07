@@ -7,12 +7,16 @@ import (
 )
 
 func solvePart1(input []string) {
-	startingNode := findCoordinates(input, "S")
-	fmt.Println("Shortest path:", bfs(input, startingNode, "E"))
+	sum := 0
+	for _, snfu := range input {
+		sum += SNFUtoDecimal(snfu)
+	}
+
+	fmt.Println("Total sum of SNFU is", DecimalToSNFU(sum))
 }
 
 func main() {
-	input := utils.ReadInputFile(utils.GenInputFile(12))
+	input := utils.ReadInputFile(utils.GenInputFile(25))
 
 	timer := time.Now()
 	solvePart1(input)

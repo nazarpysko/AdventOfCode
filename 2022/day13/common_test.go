@@ -20,8 +20,6 @@ func TestIsOrderRight(t *testing.T) {
 		{"Right side ran out of items",
 			"[7,7,7,7]", "[7,7,7]", false},
 		{"Left side ran out of items",
-			"[]", "[3]", false},
-		{"Left side ran out of items",
 			"[]", "[3]", true},
 		{"Right side ran out of items",
 			"[[[]]]", "[[]]", false},

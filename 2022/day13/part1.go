@@ -9,13 +9,14 @@ import (
 func solvePart1(input []string) {
 	sum := 0
 	for i := 0; i < len(input); i += 3 {
-		left := input[i]
-		right := input[i+1]
+		left, right := input[i], input[i+1]
 
 		if isOrderRight(left, right) {
-			sum += i%3 + 1
+			sum += i/3 + 1
 		}
 	}
+
+	fmt.Println("Sum of indices:", sum)
 }
 
 func main() {

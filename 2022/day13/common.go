@@ -1,11 +1,39 @@
 package main
 
+import (
+	"encoding/json"
+)
+
 func isOrderRight(left, right string) bool {
-	for i, _ := range left {
-		if left[i] > right[i] {
-			return false
+	var l, r any
+	json.Unmarshal([]byte(left), &l)
+	json.Unmarshal([]byte(right), &r)
+
+	if cmp(l, r) <= 0 {
+		return true
+	}
+
+	return false
+}
+
+func cmp(left, right any) int {
+	l, lok := left.([]any)
+	r, rok := right.([]any)
+
+	switch {
+	case !lok && !rok:
+		return int(left.(float64) - right.(float64))
+	case !lok:
+		l = []any{left}
+	case !rok:
+		r = []any{right}
+	}
+
+	for i := 0; i < len(l) && i < len(r); i++ {
+		if res := cmp(l[i], r[i]); res != 0 {
+			return res
 		}
 	}
 
-	return true
+	return len(l) - len(r)
 }

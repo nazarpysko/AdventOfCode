@@ -4,10 +4,17 @@ import (
 	"encoding/json"
 )
 
-func isOrderRight(left, right string) bool {
+func unmarshal(left, right string) (any, any) {
 	var l, r any
+
 	json.Unmarshal([]byte(left), &l)
 	json.Unmarshal([]byte(right), &r)
+
+	return l, r
+}
+
+func isOrderRight(left, right string) bool {
+	var l, r = unmarshal(left, right)
 
 	if cmp(l, r) <= 0 {
 		return true

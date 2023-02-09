@@ -18,10 +18,6 @@ func solvePart1(input []string) {
 
 	// Pour the sand until abyss flowing
 	for {
-		if sandGrains == 23 {
-			fmt.Println("Stop here")
-		}
-
 		if !cave.pourSand() {
 			break
 		}

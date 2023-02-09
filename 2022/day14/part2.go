@@ -14,18 +14,20 @@ func solvePart2(input []string) {
 		cave.addPath(path)
 	}
 
+	cave.addPath(fmt.Sprintf("0,%d -> 8000,%d", cave.deepestLevel+2, cave.deepestLevel+2))
+
 	sandGrains := 0
 
 	// Pour the sand until source is sand
 	for {
-		if !cave.pourSand() {
+		if cave.isSourceSand() || !cave.pourSand() {
 			break
 		}
 
 		sandGrains += 1
 	}
 
-	fmt.Println("Total units of sand until reach the abyss:", sandGrains)
+	fmt.Println("Total units of sand until source is sand:", sandGrains)
 }
 
 func main() {

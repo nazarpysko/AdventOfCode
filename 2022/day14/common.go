@@ -129,3 +129,7 @@ func (c *Cave) cameToRest(sandPoint Coordinate) (Coordinate, bool) {
 	c.structure[startingSandPoint] = sand
 	return sandPoint, true
 }
+
+func (c *Cave) isSourceSand() bool {
+	return c.structure[Coordinate{500, 0}] == sand
+}
